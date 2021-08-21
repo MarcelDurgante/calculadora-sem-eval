@@ -23,83 +23,104 @@ let numbers = Array.from(number);
 // -------- EVENT LISTENER CHANGING CLASSES --------
 
 toggleBtn.addEventListener("click", () => {
-    mainContainer.classList.toggle("main-container--light");
-    miniScreen.classList.toggle("mini-screen--light");
-    screen.classList.toggle("screen--light");
-    keyboardGrid.classList.toggle("keyboard-grid--light");
-    keys.forEach((element) => {
-        element.classList.toggle("key--light");
-    });
-    operators.forEach((element) => {
-        element.classList.toggle("operator--light");
-    });
-    numbers.forEach((element) => {
-        element.classList.toggle("number--light");
-    });
-    equal.classList.toggle("equal--light");
-    label.classList.toggle("label--light");
+  mainContainer.classList.toggle("main-container--light");
+  miniScreen.classList.toggle("mini-screen--light");
+  screen.classList.toggle("screen--light");
+  keyboardGrid.classList.toggle("keyboard-grid--light");
+  keys.forEach((element) => {
+    element.classList.toggle("key--light");
+  });
+  operators.forEach((element) => {
+    element.classList.toggle("operator--light");
+  });
+  numbers.forEach((element) => {
+    element.classList.toggle("number--light");
+  });
+  equal.classList.toggle("equal--light");
+  label.classList.toggle("label--light");
 });
 
 // -------- PRINTING OPERATORS --------
 
 operators.forEach((operator) => {
-    operator.addEventListener("click", (e) => {
-        // -------- CLEAR BUTTON --------
-        if (operator.innerHTML == "C") {
-            screen.innerHTML = 0;
-            miniScreen.innerHTML = 0;
+  operator.addEventListener("click", (e) => {
+    // -------- CLEAR BUTTON --------
+    if (operator.innerHTML == "C") {
+      screen.innerHTML = 0;
+      miniScreen.innerHTML = 0;
 
-            // -------- SHOW ONLY ONE OPERATOR --------
-        } else if (
-            screen.innerHTML.slice(-1) == "+" ||
-            screen.innerHTML.slice(-1) == "-" ||
-            screen.innerHTML.slice(-1) == "*" ||
-            screen.innerHTML.slice(-1) == "/" ||
-            screen.innerHTML.slice(-1) == "%" ||
-            screen.innerHTML.slice(-1) == "+-"
-        ) {} else {
-            screen.innerHTML += e.target.value; // it also works with e.target.value, it will return an array of the buttons too
-        }
-    });
+      // -------- SHOW ONLY ONE OPERATOR --------
+    } else if (
+      screen.innerHTML.slice(-1) == "+" ||
+      screen.innerHTML.slice(-1) == "-" ||
+      screen.innerHTML.slice(-1) == "*" ||
+      screen.innerHTML.slice(-1) == "/" ||
+      screen.innerHTML.slice(-1) == "%" ||
+      screen.innerHTML.slice(-1) == "+-"
+    ) {
+    } else {
+      screen.innerHTML += e.target.value; // it also works with e.target.value, it will return an array of the buttons too
+    }
+  });
 });
 
 // -------- PRINTING NUMBERS --------
 
 numbers.forEach((number) => {
-    number.addEventListener("click", () => {
-        if (screen.textContent === "0") {
-            screen.innerHTML = number.value;
-        } else {
-            screen.textContent += number.value;
-        }
-    });
+  number.addEventListener("click", () => {
+    if (screen.textContent === "0") {
+      screen.innerHTML = number.value;
+    } else {
+      screen.textContent += number.value;
+    }
+  });
 });
+
+// -------- FUNCTIONS FOR CALCULAT0R --------
+
+function suma(a, b) {
+  return parseInt(a) + parseInt(b);
+}
+function resta(a, b) {
+  return parseInt(a) - parseInt(b);
+}
+function multiplicacion(a, b) {
+  return parseInt(a) * parseInt(b);
+}
+function division(a, b) {
+  return parseInt(a) / parseInt(b);
+}
+function remainder(a, b) {
+  return parseInt(a) % parseInt(b);
+}
 
 // -------- PRINT MINI-SCREEN AFTER EQUAL --------
 
 equal.addEventListener("click", () => {
-    miniScreen.textContent = screen.textContent;
-    screen.textContent = eval(screen.innerHTML);
-    operationLog.innerHTML +=
-        miniScreen.textContent + " = " + screen.textContent + "<br>";
+  miniScreen.textContent = screen.textContent;
+  //   screen.textContent = eval(screen.innerHTML);
+  operationLog.innerHTML +=
+    miniScreen.textContent + " = " + screen.textContent + "<br>";
 });
 
 // -------- FOR F***NG DECIMALS --------
 
 decimal.addEventListener("click", () => {
-    if (!screen.textContent.includes(".")) {
-        screen.textContent += decimal.value;
-    }
+  if (!screen.textContent.includes(".")) {
+    screen.textContent += decimal.value;
+  }
 });
 
 // -------- TO OPENS OPERATIONS LOG -------
 
 historyBtn.addEventListener("click", () => {
-    operationLog.classList.toggle("--is-visible");
+  operationLog.classList.toggle("--is-visible");
 });
 
 // -------- PLUS MINUS BUTTON -------
 
 plusMinus.addEventListener("click", () => {
-    screen.textContent = screen.textContent * -1;
+  screen.textContent = screen.textContent * -1;
 });
+
+suma(3, 4);

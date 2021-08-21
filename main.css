@@ -239,6 +239,7 @@ body {
 
 .operation-log {
   position: relative;
+  visibility: hidden;
   overflow-x: hidden;
   overflow-y: visible;
   border: 2px solid var(--light-blue);
