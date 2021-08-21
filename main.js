@@ -15,6 +15,8 @@ let decimal = document.getElementById("decimal");
 let operationLog = document.getElementById("opLog");
 let historyBtn = document.getElementById("historyBtn");
 let plusMinus = document.getElementById("plusMinus");
+let valor1;
+let valor2;
 
 let keys = Array.from(key);
 let operators = Array.from(operator);
@@ -40,11 +42,25 @@ toggleBtn.addEventListener("click", () => {
   label.classList.toggle("label--light");
 });
 
+// -------- PRINTING NUMBERS --------
+
+numbers.forEach((number) => {
+  number.addEventListener("click", () => {
+    if (screen.textContent === "0") {
+      screen.innerHTML = number.value;
+    } else {
+      screen.textContent += number.value;
+    }
+    valor1 = parseFloat(screen.textContent);
+  });
+});
+
 // -------- PRINTING OPERATORS --------
 
 operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
     // -------- CLEAR BUTTON --------
+
     if (operator.innerHTML == "C") {
       screen.innerHTML = 0;
       miniScreen.innerHTML = 0;
@@ -64,41 +80,54 @@ operators.forEach((operator) => {
   });
 });
 
-// -------- PRINTING NUMBERS --------
-
-numbers.forEach((number) => {
-  number.addEventListener("click", () => {
-    if (screen.textContent === "0") {
-      screen.innerHTML = number.value;
-    } else {
-      screen.textContent += number.value;
-    }
-  });
-});
+// -------- MEM0RIA --------
 
 // -------- FUNCTIONS FOR CALCULAT0R --------
 
-function suma(a, b) {
-  return parseInt(a) + parseInt(b);
+function add(valor1, valor2) {
+  let res = valor1 + valor2;
+  screen.textContent = res;
+  console.log(res);
 }
-function resta(a, b) {
-  return parseInt(a) - parseInt(b);
+function rest(valor1, valor2) {
+  let res = valor1 - valor2;
+  screen.textContent = res;
+  console.log(res);
 }
-function multiplicacion(a, b) {
-  return parseInt(a) * parseInt(b);
-}
-function division(a, b) {
-  return parseInt(a) / parseInt(b);
-}
-function remainder(a, b) {
-  return parseInt(a) % parseInt(b);
+
+function multiply(valor1, valor2) {
+  let res = valor1 * valor2;
+  screen.textContent = res;
+  console.log(res);
 }
 
 // -------- PRINT MINI-SCREEN AFTER EQUAL --------
 
 equal.addEventListener("click", () => {
   miniScreen.textContent = screen.textContent;
-  //   screen.textContent = eval(screen.innerHTML);
+
+  // -------- TO DO THE OPERATION --------
+
+  if (screen.textContent.includes("+")) {
+    valor2 = parseFloat(screen.textContent.split("+").pop());
+
+    add(valor1, valor2);
+  } else if (screen.textContent.includes("-")) {
+    valor2 = parseFloat(screen.textContent.split("-").pop());
+
+    rest(valor1, valor2);
+  } else if (screen.textContent.includes("*")) {
+    valor2 = parseFloat(screen.textContent.split("*").pop());
+
+    multiply(valor1, valor2);
+  } else if (screen.textContent.includes("/")) {
+    valor2 = parseFloat(screen.textContent.split("/").pop());
+
+    division(valor1, valor2);
+  }
+
+  // -------- REGISTER OPERATION TO OPERATION LOG --------
+
   operationLog.innerHTML +=
     miniScreen.textContent + " = " + screen.textContent + "<br>";
 });
@@ -122,5 +151,3 @@ historyBtn.addEventListener("click", () => {
 plusMinus.addEventListener("click", () => {
   screen.textContent = screen.textContent * -1;
 });
-
-suma(3, 4);
